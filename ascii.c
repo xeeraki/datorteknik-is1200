@@ -1,3 +1,9 @@
+/*
+written by Adam Shafai
+this code prints evrey third ascii charachter from 0 to F
+this is converted from the assembly lab 1 written by F. Lundevall
+*/
+
 #include <stdio.h>
 int main(void)
 {
