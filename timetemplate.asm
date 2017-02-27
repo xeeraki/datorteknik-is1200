@@ -87,9 +87,13 @@ hexasc:
    	add	$v0,$a0,$v0 	#v0 = V0 +a0
    	jr	$ra
    	nop
- delay:
+
+
+delay:
  	jr	$ra
  	nop
+
+	
  	
  time2string:
  	PUSH	($t0)			
@@ -97,11 +101,13 @@ hexasc:
  	PUSH	($t2)
  	PUSH	($t3)
  	PUSH	($t4)
+ 	PUSH	($t5)
  	PUSH	($ra)			#nested subroutine must store $ra too
+ 	
  	add	$t0,$0,$a0		#contaisn the adress of string (timstr)
  	add	$t1,$0,$a1		#contains the time-info(0x5957)
  	
- 	andi	$2,$t1,0xf000  	#check the 4 most signifaicant bits ignore other bits
+ 	andi	$t2,$t1,0xf000  	#check the 4 most signifaicant bits ignore other bits
  	srl	$a0,$t2,12		#shift the MSB to LSB position (hexasc take only 4 bits in the LSB position)
  	jal	hexasc		# call hexasc
  	nop		
@@ -114,8 +120,10 @@ hexasc:
  	srl	$a0,$t3,8		#shift those bits to the LSB position(0x000f)
  	jal	hexasc		
  	nop
- 	sb	$t3,1($t0)		
+ 	sb	$v0,1($t0)		
  	
+ 	li	$t5,0x3A
+ 	sb	$t5,2($t0)
  	
  	
  	
@@ -134,6 +142,7 @@ hexasc:
  	
  
  	POP	($ra)
+ 	POP	($t5)
  	POP	($t4)
  	POP	($t3)
  	POP	($t2)
@@ -142,3 +151,4 @@ hexasc:
  	
  	jr	$ra
  	nop	
+
