@@ -52,7 +52,7 @@ tick:	lw	$t0,0($a0)	# get time
 	sltiu	$t2,$t1,0xa	# if digit < a, okay
 	bnez	$t2,tiend
 	nop
-	addiu	$t0,$t0,0x6	# adjust lowest digit
+	addiu	$t0,$t0,0x6		# adjust lowest digit
 	andi	$t1,$t0,0xf0	# check next digit
 	sltiu	$t2,$t1,0x60	# if digit < 6, okay
 	bnez	$t2,tiend
@@ -69,7 +69,7 @@ tick:	lw	$t0,0($a0)	# get time
 	nop
 	addiu	$t0,$t0,0xa000	# adjust last digit
 tiend:	sw	$t0,0($a0)	# save updated result
-	jr	$ra		# return
+	jr	$ra			# return
 	nop
 
   # you can write your code for subroutine "hexasc" and  below this line
@@ -113,9 +113,6 @@ delay:
  	nop		
  	sb	$v0, 0($t0)		#stor that 4 bits in that location that a0 points to
  	
- 	
- 	
- 	
  	andi	$t3,$t1,0x0f00	#mask to get those 4 bits you and ignore other bits
  	srl	$a0,$t3,8		#shift those bits to the LSB position(0x000f)
  	jal	hexasc		
@@ -124,8 +121,6 @@ delay:
  	
  	li	$t5,0x3A
  	sb	$t5,2($t0)
- 	
- 	
  	
  	
  	andi	$t4,$t1,0x00f0
@@ -140,6 +135,10 @@ delay:
  	nop
  	sb	$v0, 4($t0)
  	
+ 	
+ 	li	$t6,0x00
+ 	sb	$t6,5($t0)
+ 	
  
  	POP	($ra)
  	POP	($t5)
@@ -151,4 +150,3 @@ delay:
  	
  	jr	$ra
  	nop	
-
