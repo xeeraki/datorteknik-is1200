@@ -34,7 +34,7 @@ main:
 	# call your function time2string
 	la	$a0,timstr
 	la	$t0,mytime
-	lw	$a1,0($t0) #load the adress contained in $t0 into $a1
+	lw	$a1,0($t0) 	#load the adress contained in $t0 into $a1
 	jal	time2string
 	nop
 	# print a newline
@@ -75,13 +75,14 @@ tiend:	sw	$t0,0($a0)	# save updated result
   # you can write your code for subroutine "hexasc" and  below this line
   #
 hexasc:
-   	andi	$a0,$a0,0xf		#only 4 least significant bits ignore other bits	
-   	addi	$v0,$zero,0x30	        #$v0 = 0x30 ('0')
-   	addi	$t0,$zero,0x9	        #t0 = 0x9
+   	andi	$a0,$a0,0xf		#only 4 least significant bits ignore(clear) other bits	
+   	addi	$v0,$zero,0x30	        #$v0 = 0x30 ('0' ASCII character)
+   	addi	$t0,$zero,0x9	        #t0 = 0x39
    	
-   	ble	$a0,$t0,L1		#branch if a0 <= 0x9
+   	ble	$a0,$t0,L1		#branch to L1 if a0 <= t0
    	nop
-   	addi	$v0,$v0,0x7		#v0 = v0 +0x7
+   	addi	$v0,$v0,0x7		#v0 = v0 +0x7 (thier is 7 other characters from 0x39 to 0x41) thats why 
+					# 0x7 is added to the v0 to ignore the gap and print firectly A
    	
    L1:
    	add	$v0,$a0,$v0 	        #v0 = V0 +a0
