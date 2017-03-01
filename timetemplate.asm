@@ -96,57 +96,49 @@ delay:
 	
  	
  time2string:
- 	PUSH	($t0)			
- 	PUSH	($t1)
- 	PUSH	($t2)
- 	PUSH	($t3)
- 	PUSH	($t4)
- 	PUSH	($t5)
+ 	PUSH	($s0)			
+ 	PUSH	($s1)
  	PUSH	($ra)			#nested subroutine must store $ra too
  	
- 	add	$t0,$0,$a0		#contaisn the adress of string (timstr)
- 	add	$t1,$0,$a1		#contains the time-info(0x5957)
+ 	add	$s0,$0,$a0		#contaisn the adress of string (timstr)
+ 	add	$s1,$0,$a1		#contains the time-info(0x5957)
  	
- 	andi	$t2,$t1,0xf000  	#check the 4 most signifaicant bits ignore other bits
- 	srl	$a0,$t2,12		#shift the MSB to LSB position (hexasc take only 4 bits in the LSB position)
+ 	andi	$t0,$s1,0xf000  	#check the 4 most signifaicant bits ignore other bits
+ 	srl	$a0,$t0,12		#shift the MSB to LSB position (hexasc take only 4 bits in the LSB position)
  	jal	hexasc		# call hexasc
  	nop		
- 	sb	$v0, 0($t0)		#stor that 4 bits in that location that a0 points to
+ 	sb	$v0, 0($s0)		#stor that 4 bits in that location that a0 points to
  	
- 	andi	$t3,$t1,0x0f00	#mask to get those 4 bits you and ignore other bits
- 	srl	$a0,$t3,8		#shift those bits to the LSB position(0x000f)
+ 	andi	$t1,$s1,0x0f00	#mask to get those 4 bits you and ignore other bits
+ 	srl	$a0,$t1,8		#shift those bits to the LSB position(0x000f)
  	jal	hexasc		
  	nop
- 	sb	$v0,1($t0)		
+ 	sb	$v0,1($s0)		
  	
- 	li	$t5,0x3A
- 	sb	$t5,2($t0)
+ 	li	$t3,0x3A
+ 	sb	$t3,2($s0)
  	
  	
- 	andi	$t4,$t1,0x00f0
- 	srl	$a0,$t4,4
+ 	andi	$t2,$s1,0x00f0
+ 	srl	$a0,$t2,4
  	jal	hexasc
  	nop
- 	sb	$v0,3($t0)
+ 	sb	$v0,3($s0)
  	
  	
- 	move	$a0,$t1
+ 	move	$a0,$s1
  	jal	hexasc
  	nop
- 	sb	$v0, 4($t0)
+ 	sb	$v0, 4($s0)
  	
  	
- 	li	$t6,0x00
- 	sb	$t6,5($t0)
+ 	li	$t4,0x00
+ 	sb	$t4,5($s0)
  	
  
  	POP	($ra)
- 	POP	($t5)
- 	POP	($t4)
- 	POP	($t3)
- 	POP	($t2)
- 	POP	($t1)	
- 	POP	($t0)
+ 	POP	($s1)	
+ 	POP	($s0)
  	
  	jr	$ra
  	nop	
