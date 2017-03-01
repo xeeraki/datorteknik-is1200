@@ -111,7 +111,7 @@ delay:
  	
  	andi	$t1,$s1,0x0f00	#mask to get those 4 bits you and ignore other bits
  	srl	$a0,$t1,8		#shift those bits to the LSB position(0x000f)
- 	jal	hexasc		
+ 	jal	hexasc		#this is becouse hexasc only take argument on the LSB postion and clear other bits.
  	nop
  	sb	$v0,1($s0)		
  	
