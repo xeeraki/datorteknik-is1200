@@ -76,15 +76,15 @@ tiend:	sw	$t0,0($a0)	# save updated result
   #
 hexasc:
    	andi	$a0,$a0,0xf		#only 4 least significant bits ignore other bits	
-   	addi	$v0,$zero,0x30	#$v0 = 0x30 ('0')
-   	addi	$t0,$zero,0x9	#t0 = 0x9
+   	addi	$v0,$zero,0x30	        #$v0 = 0x30 ('0')
+   	addi	$t0,$zero,0x9	        #t0 = 0x9
    	
    	ble	$a0,$t0,L1		#branch if a0 <= 0x9
    	nop
    	addi	$v0,$v0,0x7		#v0 = v0 +0x7
    	
    L1:
-   	add	$v0,$a0,$v0 	#v0 = V0 +a0
+   	add	$v0,$a0,$v0 	        #v0 = V0 +a0
    	jr	$ra
    	nop
 
@@ -105,11 +105,11 @@ delay:
  	
  	andi	$t0,$s1,0xf000  	#check the 4 most signifaicant bits ignore other bits
  	srl	$a0,$t0,12		#shift the MSB to LSB position (hexasc take only 4 bits in the LSB position)
- 	jal	hexasc		# call hexasc
+ 	jal	hexasc		        # call hexasc
  	nop		
  	sb	$v0, 0($s0)		#stor that 4 bits in that location that a0 points to
  	
- 	andi	$t1,$s1,0x0f00	#mask to get those 4 bits you and ignore other bits
+ 	andi	$t1,$s1,0x0f00	        #mask to get those 4 bits you and ignore other bits
  	srl	$a0,$t1,8		#shift those bits to the LSB position(0x000f)
  	jal	hexasc		
  	nop
