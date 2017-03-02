@@ -24,7 +24,7 @@ main:
 	syscall
 	nop
 	# wait a little
-	li	$a0,2
+	li	$a0,30000
 	jal	delay
 	nop
 	# call tick
@@ -77,7 +77,7 @@ tiend:	sw	$t0,0($a0)	# save updated result
 hexasc:
    	andi	$a0,$a0,0xf		#only 4 least significant bits ignore(clear) other bits	
    	addi	$v0,$zero,0x30	        #$v0 = 0x30 ('0' ASCII character)
-   	addi	$t0,$zero,0x9	        #t0 = 0x39
+   	addi	$t0,$zero,0x9	        #t0 = 0x9
    	
    	ble	$a0,$t0,L1		#branch to L1 if a0 <= t0
    	nop
@@ -85,12 +85,30 @@ hexasc:
 					# 0x7 is added to the v0 to ignore the gap and print firectly A
    	
    L1:
-   	add	$v0,$a0,$v0 	        #v0 = V0 +a0
+   	add	$v0,$a0,$v0 	#v0 = V0 +a0 (if 
    	jr	$ra
    	nop
 
 
 delay:
+	PUSH	($s0)
+	PUSH	($ra)
+	addi	$s0, $0,0		#i = 0
+	addi	$t1,$0,4711
+	move	$t0,$a0		#move the argument to t0
+while:
+	bgt	$t0,$s0,done	#branch to done if ms > 0
+	addi	$t0,$t0,-1		#decrement ms by 1	
+for:
+	beq	$s0,$t1,done
+	addi	$s0,$s0,1
+	j	for
+	
+	
+	j	while
+done:	
+	POP	($ra)
+	POP	($s0)
  	jr	$ra
  	nop
 
@@ -106,11 +124,11 @@ delay:
  	
  	andi	$t0,$s1,0xf000  	#check the 4 most signifaicant bits ignore other bits
  	srl	$a0,$t0,12		#shift the MSB to LSB position (hexasc take only 4 bits in the LSB position)
- 	jal	hexasc		        # call hexasc
+ 	jal	hexasc		# call hexasc
  	nop		
  	sb	$v0, 0($s0)		#stor that 4 bits in that location that a0 points to
  	
- 	andi	$t1,$s1,0x0f00	        #mask to get those 4 bits you and ignore other bits
+ 	andi	$t1,$s1,0x0f00	#mask to get those 4 bits you and ignore other bits
  	srl	$a0,$t1,8		#shift those bits to the LSB position(0x000f)
  	jal	hexasc		#this is becouse hexasc only take argument on the LSB postion and clear other bits.
  	nop
