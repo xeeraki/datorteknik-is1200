@@ -1,6 +1,7 @@
   # timetemplate.asm
   # Written 2015 by F Lundevall
   # Copyright abandonded - this file is in the public domain.
+  # time2string, hexasc and delay subroutines are written by Adam Shafai
 
 .macro	PUSH (%reg)
 	addi	$sp,$sp,-4
