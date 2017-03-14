@@ -12,13 +12,11 @@
 
 void print_number(int n){
 	int i;
-	for(i = 0; i <= n; i++){
-		if(i % COLUMNS == 0)
-		
+		printf("%10d\t",n);
+		if(i % COLUMNS == 0){
 		printf("\n");
-		printf("%d\t",i);
+			i++;	
 		}
-		printf("\n");
 }
 int is_prime(int n){
 	int p; 	
@@ -26,18 +24,15 @@ int is_prime(int n){
 		if(n % p ==0 && p != n)
 			return 0;	
 	}
-  	return p;
+  	return 1;
 }
 void print_primes(int n){
-	int primes;
 	int i;
-	for(i =0; i <= n; i++){
-		if(is_prime(i) !=0){
-		primes = is_prime(i);
-		print_number(primes);
+	for(i =2; i <= n; i++){
+		if(is_prime(i))	
+		print_number(i);
 		}	
-		
-	}	
+		printf("\n");		
 }
 int main(int argc, char *argv[]){
   if(argc == 2)
