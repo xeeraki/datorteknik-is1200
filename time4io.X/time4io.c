@@ -24,4 +24,15 @@ int getsw(void){
     return switches;
 }
 
+int getbtns(void){
+    int *btn4,*btn3,*btn2;
+    int *buttons = PORTD = 0xe0;
+    if(!buttons){
+        *btn4 = PORTDbits.RD7;
+        *btn3 = PORTDbits.RD6;
+        *btn2 = PORTDbits.RD5;
+        
+    }
+    return buttons;
+}
 
