@@ -37,12 +37,13 @@ void user_isr( void )
 /* Lab-specific initialization goes here */
 void labinit( void )
 {
+    
     volatile int *trise = (volatile int*) 0xbf886100;
     //volatile int *porte = (volatile int*) 0xbf88611f;
     //volatile int *LED = (volatile int*) 0xbf886100;
-    *trise &= ~0xff;
-    
-    TRISD = ~0xfe0;
+    *trise &= ~0x00ff;
+    //0000 1111 1110 0000
+    TRISD = 0x0fe0;
     /*
     while(1){
         *LED = (*porte = 0xff);
@@ -54,52 +55,68 @@ void labinit( void )
 /* This function is called repetitively from the main program */
 void labwork( void )
 {
-    int i;
-  delay( 1000 );
+  volatile int *porte = (volatile int*) 0xbf886110;
+  volatile int *LED = (volatile int*) 0xbf886110; 
+  
+   int sw;
+   int btn;
+   while(1){
+       delay(1000);
+       sw = getsw();
+       btn = getbtns();
+       //button 4 (0100)
+       if(btn == 4){
+       mytime = mytime & 0x0fff;
+       mytime = (sw<<12) | mytime ;
+       }
+       //button 3 (0010)
+       if(btn == 2){
+       mytime = mytime & 0xf0ff;
+       mytime = (sw<<8) | mytime ;
+       }
+       //button 2 (0001)
+       if(btn == 1){
+       mytime = mytime & 0xff0f;
+       mytime = (sw<<4) | mytime ;
+       }
   time2string( textstring, mytime );
   display_string( 3, textstring );
   display_update();
-  tick( &mytime );
-  volatile int *porte = (volatile int*) 0xbf886110;
-  volatile int *LED = (volatile int*) 0xbf886110;
-  while(1){
-      
-        *LED = (*porte = 0xff);
-        tick( &mytime );
-         *LED = (*porte = 0xfe);
-        tick( &mytime );
-         *LED = (*porte = 0xfd);
-        tick( &mytime );
-        *LED = (*porte = 0xfc); 
-        tick( &mytime );
-         *LED = (*porte = 0xfb);
-        tick( &mytime );
-         *LED = (*porte = 0xf8);
-        tick( &mytime );
-         *LED = (*porte = 0xf7);
-        tick( &mytime );
-         *LED = (*porte = 0xf0);
-        tick( &mytime );
-         *LED = (*porte = 0xef);
-        tick( &mytime );
-         *LED = (*porte = 0xe0);
-        tick( &mytime );
-         *LED = (*porte = 0xdf);
-        tick( &mytime );
-         *LED = (*porte = 0xc0);
-        tick( &mytime );
-         *LED = (*porte = 0xbf);
-        tick( &mytime );
-         *LED = (*porte = 0x80);
-        tick( &mytime );
-         *LED = (*porte = 0x7f);
-        tick( &mytime );
-         *LED = (*porte = 0x00);
-      
-  
-       
-          
-      }
-  
+  tick(&mytime);
   display_image(96, icon);
-}
+  *LED = *LED + 0x1;
+   }
+   
+  delay(1000);
+  time2string( textstring, mytime );
+  display_string( 3, textstring );
+  display_update();
+  tick(&mytime);
+  display_image(96, icon);
+} 
+
+
+ 
+/*
+  int btn4Pressed = PORTD = 0x0080;
+  int btn3Pressed = PORTD = 0x0040;
+  int btn2Pressed = PORTD = 0x0020;
+  
+  
+  int sw4Polled = PORTD = 0x0800;
+  int sw3Polled = PORTD = 0x0400;
+  int sw2Polled = PORTD = 0x0200;
+  //int *sw1Polled = PORTD = 0x0100;
+  while(1){
+      delay(1000);
+  if(btn4Pressed){
+      mytime = mytime & (sw4Polled<<4); //0x5957 & 0x800(0101 1001 0101 0111 & 0000 1000 0000 0000)
+  } 
+      if (btn3Pressed){
+          mytime = mytime & sw3Polled;
+      }
+      if (btn2Pressed){
+          mytime = mytime & (sw2Polled>>4);
+      }    
+  }
+  */

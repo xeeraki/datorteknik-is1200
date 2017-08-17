@@ -11,28 +11,18 @@
 #include "mipslab.h"
 
 int getsw(void){
-    int *sw4,*sw3,*sw2,*sw1;
-    int *switches = PORTD= 0xf00; 
-    
-    if(!switches){
-    *sw4 = PORTDbits.RD11 = 1;
-    *sw3 = PORTDbits.RD10 = 1;
-    *sw2 = PORTDbits.RD9 = 1;
-    *sw1 = PORTDbits.RD8 = 1;
-    }
+    //(11 to 8) = 0x0f00 = 0000 1111 0000 0000
+    int switches = (PORTD>>8) & 0x000f;
     
     return switches;
+   
 }
 
 int getbtns(void){
-    int *btn4,*btn3,*btn2;
-    int *buttons = PORTD = 0xe0;
-    if(!buttons){
-        *btn4 = PORTDbits.RD7;
-        *btn3 = PORTDbits.RD6;
-        *btn2 = PORTDbits.RD5;
-        
-    }
+   
+    // (7 to 5) = 0x00e0 = 0000 0000 1110 0000
+    int buttons = (PORTD>>5) & 0x0007;
+      
     return buttons;
 }
 
