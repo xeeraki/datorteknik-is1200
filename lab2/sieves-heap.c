@@ -10,25 +10,24 @@ void print_number(int n){
 
 }
 
-void print_sieves(int n)
+void print_sieves_heap(int n)
 {
  int c = 0;
 
- bool p[n];
-
+ bool *buf = malloc(sizeof(bool)*n);
  // start of Sieve_of_Eratosthenes algorithm
  for(int i = 0; i <=n; i++){
-       p[i] = true;
+       buf[i] = true;
 					       }
-  p[0] = false;
-  p[1] = false;
+  buf[0] = false;
+  buf[1] = false;
 
   for(int i = 2; i <=n; i++)
   {
-	  if(p[i] == true)
+	  if(buf[i] == true)
 	  {
 		  for(int j = 2; i * j <=n; j++){
-		         p[i * j] = false;   // set all index numbers that are divisable by numbers other than themselves and 1 to false
+		         buf[i * j] = false;   // set all index numbers that are divisable by numbers other than themselves and 1 to false
                                         }
       }
   }
@@ -36,7 +35,7 @@ void print_sieves(int n)
   // for loop that prints the prime numbers in given formatting up to n
    for(int a = 2; a <= n; a++)
    {
-	   if(p[a] == true)
+	   if(buf[a] == true)
 	   {
 		   print_number(a);
 		   c++;
@@ -47,11 +46,12 @@ void print_sieves(int n)
 		   }
 	   }
    }
+   free(buf);
 
 }
 int main(int argc, char *argv[]){
   if(argc == 2)
-    print_sieves(atoi(argv[1]));
+    print_sieves_heap(atoi(argv[1]));
   else
     printf("Please state an interger number.\n");
   return 0;
