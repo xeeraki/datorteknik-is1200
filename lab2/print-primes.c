@@ -12,7 +12,7 @@
 #define COLUMNS 6
 
 void print_number(int n){
-	 printf("%10d ", n);
+	 printf("%10d \n", n);
 
 
 

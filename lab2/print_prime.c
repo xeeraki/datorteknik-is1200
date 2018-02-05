@@ -39,7 +39,6 @@ int main(int argc, char *argv[]){
     print_primes(atoi(argv[1]));
   else
     printf("Please state an interger number.\n");
-    print_primes(105);
   return 0;
   
 }
