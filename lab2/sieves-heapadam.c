@@ -30,7 +30,7 @@ int is_prime(int n){
 }
 */
 void print_sieves(int n){
-int A[n];
+int *A = malloc(sizeof(int)*n);
 	int i,j;
 	for(i =2; i < n; i++){
 	A[i] = 1;
@@ -50,7 +50,7 @@ int A[n];
 		}
 	}
 		printf("\n");	
-		
+	free(A);
 }
 int main(int argc, char *argv[]){
   if(argc == 2)
