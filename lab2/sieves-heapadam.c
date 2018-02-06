@@ -10,13 +10,14 @@
 #include <stdlib.h>
 #include <math.h>
 #define COLUMNS 6
-	
+int i = 0;	
 void print_number(int n){
-	int i;
-		printf("%10d\t",n);
-		if(i % COLUMNS == 0){
+	printf("%10d\t",n);
+	i++;
+	if(i % COLUMNS == 0){
 		printf("\n");
-			i++;	
+		i  = 0;
+			
 		}
 }
 /*
@@ -30,27 +31,27 @@ int is_prime(int n){
 }
 */
 void print_sieves(int n){
-int *A = malloc(sizeof(int)*n);
+char *A = malloc(sizeof(char)*n);
 	int i,j;
 	for(i =2; i < n; i++){
 	A[i] = 1;
 	}
-	 for(i = 2; i < n; i++){
+	 for(i = 2; i <=n; i++){
 	    if(A[i]){
-	      for(j= i+1; j < n; j++){
-		if(j%i == 0){
-	    A[j] = 0;
-				}
+	      for(j= i+i; j < n; j = j + i){
+	    		A[j] = 0;
+			
 			}	
 		}
 	}
-	for(i =2; i <= n; i++){
+	for(i =2; i <=n; i++){
 	if(A[i]){
 		print_number(i);
 		}
 	}
-		printf("\n");	
-	free(A);
+		printf("\n");
+		free(A);
+		
 }
 int main(int argc, char *argv[]){
   if(argc == 2)

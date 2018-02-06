@@ -20,17 +20,16 @@ void endian_proof(const char* c){
          (int)*c,(int)*(c+1),(int)*(c+2), (int)*(c+3));  
 }
 
-void copycodes(char *text, int *list, int c){
+void copycodes(char *text, int *list, int *c){
 	
 	while(*text != '\0'){  // check if there is charchter availibale 
 	*list++ = *text++;	// add the first character from string to the first position in the array and increament both text pointer and list pointer
-	c++;
+	*c = *c + 1;
 	}
-	count = c;
 }
 void work(){
-copycodes(text1,list1,count);
-copycodes(text2,list2,count);
+copycodes(text1,list1,&count);
+copycodes(text2,list2,&count);
 }
 
 

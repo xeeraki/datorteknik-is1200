@@ -20,7 +20,7 @@ void print_number(int n){
 
 int is_prime(int n){
     //for loop för att hitta tal som inte är primtal
-	for(int i = 2; i < 10; i++){
+	for(int i = 2; i < n; i++){
 	if(n % i == 0 && n!=i)
     return 0;
 }
