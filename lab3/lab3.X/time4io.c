@@ -9,16 +9,18 @@
 #include <p32xxxx.h>
 #include "mipslab.h" 
 
-int getsw( void ){
-
-	int SW = (PORTD >> 8) & 0x000F;
-
-	return SW;
+int getsw(void){
+    //(11 to 8) = 0x0f00 = 0000 1111 0000 0000
+    int switches = (PORTD>>8) & 0x000f;
+    
+    return switches;
+   
 }
 
 int getbtns(void){
-
-	int BTN = (PORTD >> 5) & 0x0007;
-
-	return BTN;
+   
+    // (7 to 5) = 0x00e0 = 0000 0000 1110 0000
+    int buttons = (PORTD>>5) & 0x0007;
+      
+    return buttons;
 }
